@@ -19,6 +19,7 @@ procedure Word is
 	My_List: Word_Lists.Word_List_Type;
 	Frequent_Word: ASU.Unbounded_String;
 	Max_Count: Natural;
+	Word_Added: ASU.Unbounded_String;
 
 
 
@@ -105,6 +106,8 @@ procedure Word is
 		procedure Print_Options (Option_Number: out Integer) is
 			begin
 				Ada.Text_IO.Put_Line("");
+				Ada.Text_IO.Put_Line("-----------------------");
+				Ada.Text_IO.Put_Line("");
 				Ada.Text_IO.Put_Line("Options");
 				Ada.Text_IO.Put_Line("1 Add word");
 				Ada.Text_IO.Put_Line("2 delete word");
@@ -129,26 +132,34 @@ begin
 		--Separate_Lines(File_Name);
 		if Show_Options = True then
 			Finish_Loop:= False;
+			Separate_Lines(File_Name);
 			while not Finish_Loop loop
 				Print_Options(Option_Number);
 				case Option_Number is
 					when 1 =>
-						Ada.Text_IO.Put_Line("Has elegido la opcion 1");
+						Ada.Text_IO.Put_Line(" ");
+						Ada.Text_IO.Put("Word? ");
+						Word_Added := ASU.To_Unbounded_String(Ada.Text_IO.Get_Line);
+						Word_Lists.Add_Word(My_List, Word_Added);
+						Ada.Text_IO.Put("Word |");
+						Ada.Text_IO.Put(ASU.To_String(Word_Added));
+						Ada.Text_IO.Put_Line("| added");
 					when 2 =>
 						Ada.Text_IO.Put_Line("Has elegido la opcion 2");
 					when 3 =>
 						Ada.Text_IO.Put_Line("Has elegido la opcion 3");
 					when 4 =>
 						Ada.Text_IO.Put_Line(" ");
-						Separate_Lines(File_Name);
-						Word_Lists.Print_All(My_List);
+						Word_Lists.Print_All(My_List); Null;
 					when 5 =>
-						Separate_Lines(File_Name);
 						Word_Lists.Max_Word(My_List, Frequent_Word, Max_Count);
 						Finish_Loop:= True;
 				end case;
 				Ada.Text_IO.Put(" ");
+
+
 			end loop;
+
 		else
 			Separate_Lines(File_Name);
 			Word_Lists.Max_Word(My_List, Frequent_Word, Max_Count);
