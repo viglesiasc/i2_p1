@@ -30,6 +30,6 @@ package Word_Lists is
 	                 --   Word: out ASU.Unbounded_String;
 		              --   Count: out Natural);
 
-   -- procedure Print_All (List: in Word_List_Type);
+   procedure Print_All (List: in Word_List_Type);
 
 end Word_Lists;

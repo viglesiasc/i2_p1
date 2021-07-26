@@ -4,7 +4,7 @@ with Ada.Strings.Unbounded;
 with Ada.Exceptions;
 with Ada.IO_Exceptions;
 with Ada.Characters.Handling;
--- with Word_Lists;
+with Word_Lists;
 
 procedure Word is
 	package ACL renames Ada.Command_Line;
@@ -16,6 +16,9 @@ procedure Word is
 	Finish_Loop: Boolean;
 	subtype Options_Range is Integer range 1..5;
 	Option_Number: Options_Range;
+	My_List: Word_Lists.Word_List_Type;
+
+
 
 
 		procedure Find_File(File_Name: out ASU.Unbounded_String; Show_Options: out Boolean) is
@@ -40,7 +43,8 @@ procedure Word is
 			Space_Position: Natural;
 			Word: ASU.Unbounded_String;
 			End_Line: Boolean := False;
-		--	List: Word_Lists.Word_List_Type;
+			--List: Word_Lists.Word_List_Type;
+
 
 		begin
 			while not End_Line loop
@@ -55,17 +59,19 @@ procedure Word is
 							Line := ASU.Tail(Line, ASU.Length(Line) - 1);
 						when 0 =>
 							Word:= Line;
-							Ada.Text_IO.Put_Line(ASU.To_String(Word));
+							-- Meto palabra en lista dinamica
+							Word_Lists.Add_Word(My_List, Word);
 							End_Line:= True;
 						when others =>
 							--  Word = principio de la cadena hasta el espacio
 							Word := ASU.Head(Line, Space_Position - 1);
-							Ada.Text_IO.Put_Line(ASU.To_String(Word));
+							-- Meto palabra en lista dinamica
+							Word_Lists.Add_Word(My_List, Word);
 							-- Line = el final de la cadena final desde el Space_Position
 							Line := ASU.Tail(Line, ASU.Length(Line) - Space_Position);
 					end case;
-				end if;
 
+				end if;
 			end loop;
 
 		end Separate_Words;
@@ -93,6 +99,7 @@ procedure Word is
 			end Separate_Lines;
 
 
+
 		procedure Print_Options (Option_Number: out Integer) is
 			begin
 				Ada.Text_IO.Put_Line("");
@@ -117,6 +124,7 @@ procedure Word is
 
 begin
 		Find_File(File_Name, Show_Options);
+		--Separate_Lines(File_Name);
 		if Show_Options = True then
 			Finish_Loop:= False;
 			while not Finish_Loop loop
@@ -129,7 +137,9 @@ begin
 					when 3 =>
 						Ada.Text_IO.Put_Line("Has elegido la opcion 3");
 					when 4 =>
-						Ada.Text_IO.Put_Line("Has elegido la opcion 4");
+						Ada.Text_IO.Put_Line(" ");
+						Separate_Lines(File_Name);
+						Word_Lists.Print_All(My_List);
 					when 5 =>
 						Separate_Lines(File_Name);
 						Quit;
