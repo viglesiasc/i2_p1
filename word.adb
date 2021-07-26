@@ -17,6 +17,8 @@ procedure Word is
 	subtype Options_Range is Integer range 1..5;
 	Option_Number: Options_Range;
 	My_List: Word_Lists.Word_List_Type;
+	Frequent_Word: ASU.Unbounded_String;
+	Max_Count: Natural;
 
 
 
@@ -142,13 +144,14 @@ begin
 						Word_Lists.Print_All(My_List);
 					when 5 =>
 						Separate_Lines(File_Name);
-						Quit;
+						Word_Lists.Max_Word(My_List, Frequent_Word, Max_Count);
 						Finish_Loop:= True;
 				end case;
 				Ada.Text_IO.Put(" ");
 			end loop;
 		else
 			Separate_Lines(File_Name);
+			Word_Lists.Max_Word(My_List, Frequent_Word, Max_Count);
 		end if;
 
 

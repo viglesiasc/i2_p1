@@ -69,4 +69,41 @@ package body Word_Lists is
 			end loop;
 		end if;
 	end Print_All;
+
+
+	procedure Max_Word (List: in Word_List_Type; Word: out ASU.Unbounded_String;
+										Count: out Natural) is
+
+		--Count:= 0;
+		P_Aux: Word_List_Type:= List;
+
+	begin
+
+		if List = Null then
+			raise Word_List_Error;
+		else
+			Count:= P_Aux.Count;
+			Word:= P_Aux.Word;
+			P_Aux:= P_Aux.Next;
+			while P_Aux /= Null loop
+				if P_Aux.Count > Count then
+					Count := P_Aux.Count;
+					Word:= P_Aux.Word;
+				else
+					P_Aux:= P_Aux.Next;
+				end if;
+			end loop;
+			Ada.Text_IO.Put("The most frequent word: |");
+			Ada.Text_IO.Put(ASU.To_String(Word));
+			Ada.Text_IO.Put("| - ");
+			Ada.Text_IO.Put_Line(Integer'Image(Count));
+		end if;
+	end Max_Word;
+
+
+
+
+
+
+
 end Word_Lists;
