@@ -20,7 +20,8 @@ procedure Word is
 	Frequent_Word: ASU.Unbounded_String;
 	Max_Count: Natural;
 	Word_Added: ASU.Unbounded_String;
-
+	Word_Searched: ASU.Unbounded_String;
+	Count_Search: Natural;
 
 
 
@@ -147,7 +148,13 @@ begin
 					when 2 =>
 						Ada.Text_IO.Put_Line("Has elegido la opcion 2");
 					when 3 =>
-						Ada.Text_IO.Put_Line("Has elegido la opcion 3");
+					Ada.Text_IO.Put("Word? ");
+					Word_Searched := ASU.To_Unbounded_String(Ada.Text_IO.Get_Line);
+					Ada.Text_IO.Put("|");
+					Ada.Text_IO.Put(ASU.To_String(Word_Searched));
+					Ada.Text_IO.Put("| - ");
+					Word_Lists.Search_Word(My_List, Word_Searched, Count_Search);
+					Ada.Text_IO.Put_Line(Integer'Image(Count_Search));
 					when 4 =>
 						Ada.Text_IO.Put_Line(" ");
 						Word_Lists.Print_All(My_List); Null;

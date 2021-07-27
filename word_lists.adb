@@ -101,6 +101,27 @@ package body Word_Lists is
 	end Max_Word;
 
 
+	procedure Search_Word (List: in Word_List_Type; Word: in ASU.Unbounded_String;
+											Count: out Natural) is
+		Finish: Boolean:= False;
+		P_Aux: Word_List_Type;
+
+	begin
+		Count:= 0;
+		if List /= Null then
+			P_Aux:= List;
+			while (not Finish) and P_Aux /= Null loop
+				if ASU.To_String(P_Aux.Word) = ASU.To_String(Word) then
+					Count:= P_Aux.Count;
+					Finish := True;
+				else
+					P_Aux:= P_Aux.Next;
+				end if;
+			end loop;
+		else
+			Count:= 0;
+		end if;
+	end Search_Word;
 
 
 
