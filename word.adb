@@ -22,7 +22,7 @@ procedure Word is
 	Word_Added: ASU.Unbounded_String;
 	Word_Searched: ASU.Unbounded_String;
 	Count_Search: Natural;
-
+	Word_Deleted: ASU.Unbounded_String;
 
 
 		procedure Find_File(File_Name: out ASU.Unbounded_String; Show_Options: out Boolean) is
@@ -111,7 +111,7 @@ procedure Word is
 				Ada.Text_IO.Put_Line("");
 				Ada.Text_IO.Put_Line("Options");
 				Ada.Text_IO.Put_Line("1 Add word");
-				Ada.Text_IO.Put_Line("2 delete word");
+				Ada.Text_IO.Put_Line("2 Delete word");
 				Ada.Text_IO.Put_Line("3 Search Word");
 				Ada.Text_IO.Put_Line("4 Show all words");
 				Ada.Text_IO.Put_Line("5 Quit");
@@ -146,7 +146,12 @@ begin
 						Ada.Text_IO.Put(ASU.To_String(Word_Added));
 						Ada.Text_IO.Put_Line("| added");
 					when 2 =>
-						Ada.Text_IO.Put_Line("Has elegido la opcion 2");
+						Ada.Text_IO.Put("Word? ");
+						Word_Deleted := ASU.To_Unbounded_String(Ada.Text_IO.Get_Line);
+						Word_Lists.Delete_Word(My_List, Word_Deleted);
+						Ada.Text_IO.Put("|");
+						Ada.Text_IO.Put(ASU.To_String(Word_Deleted));
+						Ada.Text_IO.Put_Line("| deleted");
 					when 3 =>
 					Ada.Text_IO.Put("Word? ");
 					Word_Searched := ASU.To_Unbounded_String(Ada.Text_IO.Get_Line);

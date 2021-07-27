@@ -124,7 +124,31 @@ package body Word_Lists is
 	end Search_Word;
 
 
-
-
-
+	procedure Delete_Word (List: in out Word_List_Type;	Word: in ASU.Unbounded_String) is
+		Count: Natural;
+		P_Aux: Word_List_Type;
+		P_Aux2: Word_List_Type;
+		Found: Boolean;
+	begin
+		Found:= False;
+		Search_Word(List, Word, Count);
+		P_Aux:= List;
+		If Count = 0 then
+			Ada.Text_IO.Put("Word_List_Error");
+		else
+			if ASU.To_String(List.Word) = ASU.To_String(Word)  then
+				List:= List.Next;
+			else
+				while (not Found) and P_Aux /= Null loop
+					if ASU.To_String(P_Aux.Next.Word) = ASU.To_String(Word) then
+						P_Aux2:= P_Aux.Next;
+						P_Aux.Next:= P_Aux2.Next;
+						Found:= True;
+					else
+						P_Aux:= P_Aux.Next;
+					end if;
+				end loop;
+			end if;
+		end if;
+	end Delete_Word;
 end Word_Lists;
