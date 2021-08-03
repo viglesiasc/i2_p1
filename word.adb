@@ -16,7 +16,7 @@ procedure Word is
 	Finish_Loop: Boolean;
 	subtype Options_Range is Integer range 1..5;
 	Option_Number: Options_Range;
-	My_List: Word_Lists.Word_List_Type;
+	The_List: Word_Lists.Word_List_Type;
 	Frequent_Word: ASU.Unbounded_String;
 	Max_Count: Natural;
 	Word_Added: ASU.Unbounded_String;
@@ -64,13 +64,13 @@ procedure Word is
 						when 0 =>
 							Word:= Line;
 							-- Meto palabra en lista dinamica
-							Word_Lists.Add_Word(My_List, Word);
+							Word_Lists.Add_Word(The_List, Word);
 							End_Line:= True;
 						when others =>
 							--  Word = principio de la cadena hasta el espacio
 							Word := ASU.Head(Line, Space_Position - 1);
 							-- Meto palabra en lista dinamica
-							Word_Lists.Add_Word(My_List, Word);
+							Word_Lists.Add_Word(The_List, Word);
 							-- Line = el final de la cadena final desde el Space_Position
 							Line := ASU.Tail(Line, ASU.Length(Line) - Space_Position);
 					end case;
@@ -107,8 +107,6 @@ procedure Word is
 		procedure Print_Options (Option_Number: out Integer) is
 			begin
 				Ada.Text_IO.Put_Line("");
-				Ada.Text_IO.Put_Line("-----------------------");
-				Ada.Text_IO.Put_Line("");
 				Ada.Text_IO.Put_Line("Options");
 				Ada.Text_IO.Put_Line("1 Add word");
 				Ada.Text_IO.Put_Line("2 Delete word");
@@ -141,14 +139,14 @@ begin
 						Ada.Text_IO.Put_Line(" ");
 						Ada.Text_IO.Put("Word? ");
 						Word_Added := ASU.To_Unbounded_String(Ada.Text_IO.Get_Line);
-						Word_Lists.Add_Word(My_List, Word_Added);
+						Word_Lists.Add_Word(The_List, Word_Added);
 						Ada.Text_IO.Put("Word |");
 						Ada.Text_IO.Put(ASU.To_String(Word_Added));
 						Ada.Text_IO.Put_Line("| added");
 					when 2 =>
 						Ada.Text_IO.Put("Word? ");
 						Word_Deleted := ASU.To_Unbounded_String(Ada.Text_IO.Get_Line);
-						Word_Lists.Delete_Word(My_List, Word_Deleted);
+						Word_Lists.Delete_Word(The_List, Word_Deleted);
 						Ada.Text_IO.Put("|");
 						Ada.Text_IO.Put(ASU.To_String(Word_Deleted));
 						Ada.Text_IO.Put_Line("| deleted");
@@ -158,13 +156,13 @@ begin
 					Ada.Text_IO.Put("|");
 					Ada.Text_IO.Put(ASU.To_String(Word_Searched));
 					Ada.Text_IO.Put("| - ");
-					Word_Lists.Search_Word(My_List, Word_Searched, Count_Search);
+					Word_Lists.Search_Word(The_List, Word_Searched, Count_Search);
 					Ada.Text_IO.Put_Line(Integer'Image(Count_Search));
 					when 4 =>
 						Ada.Text_IO.Put_Line(" ");
-						Word_Lists.Print_All(My_List); Null;
+						Word_Lists.Print_All(The_List); Null;
 					when 5 =>
-						Word_Lists.Max_Word(My_List, Frequent_Word, Max_Count);
+						Word_Lists.Max_Word(The_List, Frequent_Word, Max_Count);
 						Finish_Loop:= True;
 				end case;
 				Ada.Text_IO.Put(" ");
@@ -174,7 +172,7 @@ begin
 
 		else
 			Separate_Lines(File_Name);
-			Word_Lists.Max_Word(My_List, Frequent_Word, Max_Count);
+			Word_Lists.Max_Word(The_List, Frequent_Word, Max_Count);
 		end if;
 
 

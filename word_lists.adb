@@ -97,6 +97,7 @@ package body Word_Lists is
 			Ada.Text_IO.Put(ASU.To_String(Word));
 			Ada.Text_IO.Put("| - ");
 			Ada.Text_IO.Put_Line(Integer'Image(Count));
+			Ada.Text_IO.Put_Line("");
 		end if;
 	end Max_Word;
 
